@@ -1,0 +1,41 @@
+﻿@model IEnumerable<AdminEdificios.Visitas>
+@using GridMvc.Html
+
+
+@{
+    ViewBag.Title = "Visitas";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")"></script>
+    @*<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax")"></script>*@
+    <script src="@Url.Content("~/Scripts/gridmvc.min.js")"></script>
+    <title>visitas</title>
+</head>
+<body>
+    <h1>Visitas ingresadas</h1>
+    <h3>
+        <p>
+            @Html.ActionLink("Ingresar visita", "Create")
+        </p>
+    </h3>
+    <hr />
+    <div style="width: 800px;">
+        @Html.Grid(Model).Columns(columns =>
+    {
+        columns.Add(model => model.Nombre).Titled("Nombre");
+        columns.Add(model => model.ApellidoP).Titled("Apellido P").Filterable(true);
+        columns.Add(model => model.ApellidoM).Titled("Apellido M").Filterable(true);
+        columns.Add(model => model.Rut).Titled("Rut").Filterable(true);
+        columns.Add(model => model.Depto).Titled("Depto").Filterable(true);
+        columns.Add(model => model.EstacionamientoV).Titled("Estacionamiento V").Filterable(true);
+        columns.Add(model => model.Fingreso, "Fecha").Titled("Fecha Ingreso").Format("{0:dd/MM/yyyy}").SetWidth(110);
+        columns.Add(model => model.Fingreso, "Hora").Titled("Hora Ingreso").Format("{0:hh:mm tt}").SetWidth(110); 
+    }).WithPaging(10).Sortable(true).Selectable(true).Filterable().WithMultipleFilters()
+    </div>
+</body>
+</html>

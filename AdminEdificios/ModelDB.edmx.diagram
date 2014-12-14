@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fc4fdf76cd9845ef8d091e2c9b49fd53" Name="Diagram1">
+        <EntityTypeShape EntityType="admedifModel.Departamentos" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="admedifModel.Estacionamientos" Width="1.5" PointX="5.875" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="admedifModel.Propietarios" Width="1.5" PointX="0.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="admedifModel.Visitas" Width="1.5" PointX="6" PointY="4.375" IsExpanded="true" />
+        <AssociationConnector Association="admedifModel.FK_Propietarios_Departamentos" ManuallyRouted="false" />
+        <AssociationConnector Association="admedifModel.FK_Visitas_Departamentos" ManuallyRouted="false" />
+        <AssociationConnector Association="admedifModel.FK_Propietarios_Estacionamientos" ManuallyRouted="false" />
+        <AssociationConnector Association="admedifModel.FK_Visitas_Estacionamientos" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="admedifModel.GastosComunes" Width="1.5" PointX="8" PointY="0.625" />
+        <EntityTypeShape EntityType="admedifModel.GastosPropiedades" Width="1.5" PointX="3.625" PointY="5" />
+        <EntityTypeShape EntityType="admedifModel.Reservas" Width="1.5" PointX="6" PointY="7.75" />
+        <AssociationConnector Association="admedifModel.FK_GastosPropiedades_Departamentos" />
+        <AssociationConnector Association="admedifModel.FK_Reservas_Departamentos" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

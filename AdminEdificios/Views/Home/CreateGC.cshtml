@@ -1,0 +1,117 @@
+﻿@model AdminEdificios.GastosComunes
+
+
+@{
+    ViewBag.Title = "CreateGC";
+}
+
+<h2>CreateGC</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>GastosComunes</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Año, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Año, new SelectList(
+                  new List<Object>{
+                       new { value = 2014 , text = "2014"},
+                       new { value = 2015 , text = "2015"},
+                       new { value = 2016 , text = "2016"},
+                       new { value = 2017 , text = "2017"},
+                       new { value = 2018 , text = "2018"},
+                       new { value = 2019 , text = "2019"},
+                       new { value = 2020 , text = "2020"},
+                    },
+                  "value",
+                  "text",
+                   2014))
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Mes, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Mes, new SelectList(
+                  new List<Object>{
+                       new { value = "enero" , text = "Enero"},
+                       new { value = "febrero" , text = "Febrero"},
+                       new { value = "marzo" , text = "Marzo"},
+                       new { value = "abril" , text = "Abril"},
+                       new { value = "mayo" , text = "Mayo"},
+                       new { value = "junio" , text = "Junio"},
+                       new { value = "julio" , text = "Julio"},
+                       new { value = "agosto" , text = "Agosto"},
+                       new { value = "septiembre" , text = "Septiembre"},
+                       new { value = "octubre" , text = "Octubre"},
+                       new { value = "noviembre" , text = "Noviembre"},
+                       new { value = "diciembre" , text = "Diciembre"},
+                    },
+                  "value",
+                  "text",
+                   "diciembre"))
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.GastosServicios, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GastosServicios, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.GastosServicios, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ServiciosHonorarios, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ServiciosHonorarios, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ServiciosHonorarios, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MaterialesGenerales, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MaterialesGenerales, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MaterialesGenerales, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Sueldos, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Sueldos, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Sueldos, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Extras, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Extras, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Extras, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,531 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="admedifModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Departamentos">
+          <Key>
+            <PropertyRef Name="DepartamentoId" />
+          </Key>
+          <Property Name="DepartamentoId" Type="int" Nullable="false" />
+          <Property Name="Piso" Type="int" Nullable="false" />
+          <Property Name="Orientacion" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Cocina" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Metros" Type="int" Nullable="false" />
+          <Property Name="Alicuota" Type="decimal" Precision="2" Scale="2" />
+        </EntityType>
+        <EntityType Name="Estacionamientos">
+          <Key>
+            <PropertyRef Name="EstacionamientoId" />
+          </Key>
+          <Property Name="EstacionamientoId" Type="int" Nullable="false" />
+          <Property Name="Piso" Type="int" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GastosComunes">
+          <Key>
+            <PropertyRef Name="GastosComunesId" />
+          </Key>
+          <Property Name="GastosComunesId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Año" Type="int" Nullable="false" />
+          <Property Name="Mes" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="GastosServicios" Type="int" Nullable="false" />
+          <Property Name="ServiciosHonorarios" Type="int" />
+          <Property Name="MaterialesGenerales" Type="int" />
+          <Property Name="Sueldos" Type="int" Nullable="false" />
+          <Property Name="Extras" Type="int" />
+          <Property Name="Total" Type="int" />
+        </EntityType>
+        <EntityType Name="GastosPropiedades">
+          <Key>
+            <PropertyRef Name="GastoPropiedadId" />
+          </Key>
+          <Property Name="GastoPropiedadId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartamentoId" Type="int" Nullable="false" />
+          <Property Name="Año" Type="int" Nullable="false" />
+          <Property Name="Mes" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="GastoComunidad" Type="int" Nullable="false" />
+          <Property Name="Alicuota" Type="decimal" Precision="2" Scale="2" Nullable="false" />
+          <Property Name="Extra" Type="int" />
+          <Property Name="Multa" Type="int" />
+          <Property Name="TotalGastoDepto" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Propietarios">
+          <Key>
+            <PropertyRef Name="PropietarioId" />
+          </Key>
+          <Property Name="PropietarioId" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ApellidoP" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ApellidoM" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Rut" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Depto" Type="int" />
+          <Property Name="Estacionamiento" Type="int" />
+          <Property Name="TelFijo" Type="int" />
+          <Property Name="TelTrabajo" Type="int" />
+          <Property Name="TelCelular" Type="int" />
+        </EntityType>
+        <EntityType Name="Reservas">
+          <Key>
+            <PropertyRef Name="ReservaId" />
+          </Key>
+          <Property Name="ReservaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartamentoId" Type="int" Nullable="false" />
+          <Property Name="EspacioComunId" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Horario" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Visitas">
+          <Key>
+            <PropertyRef Name="VisitaId" />
+          </Key>
+          <Property Name="VisitaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ApellidoP" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ApellidoM" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Rut" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Depto" Type="int" Nullable="false" />
+          <Property Name="EstacionamientoV" Type="int" />
+          <Property Name="Fingreso" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_GastosPropiedades_Departamentos">
+          <End Role="Departamentos" Type="Self.Departamentos" Multiplicity="1" />
+          <End Role="GastosPropiedades" Type="Self.GastosPropiedades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departamentos">
+              <PropertyRef Name="DepartamentoId" />
+            </Principal>
+            <Dependent Role="GastosPropiedades">
+              <PropertyRef Name="DepartamentoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Propietarios_Departamentos">
+          <End Role="Departamentos" Type="Self.Departamentos" Multiplicity="0..1" />
+          <End Role="Propietarios" Type="Self.Propietarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departamentos">
+              <PropertyRef Name="DepartamentoId" />
+            </Principal>
+            <Dependent Role="Propietarios">
+              <PropertyRef Name="Depto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Propietarios_Estacionamientos">
+          <End Role="Estacionamientos" Type="Self.Estacionamientos" Multiplicity="0..1" />
+          <End Role="Propietarios" Type="Self.Propietarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estacionamientos">
+              <PropertyRef Name="EstacionamientoId" />
+            </Principal>
+            <Dependent Role="Propietarios">
+              <PropertyRef Name="Estacionamiento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservas_Departamentos">
+          <End Role="Departamentos" Type="Self.Departamentos" Multiplicity="1" />
+          <End Role="Reservas" Type="Self.Reservas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departamentos">
+              <PropertyRef Name="DepartamentoId" />
+            </Principal>
+            <Dependent Role="Reservas">
+              <PropertyRef Name="DepartamentoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visitas_Departamentos">
+          <End Role="Departamentos" Type="Self.Departamentos" Multiplicity="1" />
+          <End Role="Visitas" Type="Self.Visitas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departamentos">
+              <PropertyRef Name="DepartamentoId" />
+            </Principal>
+            <Dependent Role="Visitas">
+              <PropertyRef Name="Depto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visitas_Estacionamientos">
+          <End Role="Estacionamientos" Type="Self.Estacionamientos" Multiplicity="0..1" />
+          <End Role="Visitas" Type="Self.Visitas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estacionamientos">
+              <PropertyRef Name="EstacionamientoId" />
+            </Principal>
+            <Dependent Role="Visitas">
+              <PropertyRef Name="EstacionamientoV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="admedifModelStoreContainer">
+          <EntitySet Name="Departamentos" EntityType="Self.Departamentos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estacionamientos" EntityType="Self.Estacionamientos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GastosComunes" EntityType="Self.GastosComunes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GastosPropiedades" EntityType="Self.GastosPropiedades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Propietarios" EntityType="Self.Propietarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reservas" EntityType="Self.Reservas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Visitas" EntityType="Self.Visitas" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_GastosPropiedades_Departamentos" Association="Self.FK_GastosPropiedades_Departamentos">
+            <End Role="Departamentos" EntitySet="Departamentos" />
+            <End Role="GastosPropiedades" EntitySet="GastosPropiedades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Propietarios_Departamentos" Association="Self.FK_Propietarios_Departamentos">
+            <End Role="Departamentos" EntitySet="Departamentos" />
+            <End Role="Propietarios" EntitySet="Propietarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Propietarios_Estacionamientos" Association="Self.FK_Propietarios_Estacionamientos">
+            <End Role="Estacionamientos" EntitySet="Estacionamientos" />
+            <End Role="Propietarios" EntitySet="Propietarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservas_Departamentos" Association="Self.FK_Reservas_Departamentos">
+            <End Role="Departamentos" EntitySet="Departamentos" />
+            <End Role="Reservas" EntitySet="Reservas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visitas_Departamentos" Association="Self.FK_Visitas_Departamentos">
+            <End Role="Departamentos" EntitySet="Departamentos" />
+            <End Role="Visitas" EntitySet="Visitas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visitas_Estacionamientos" Association="Self.FK_Visitas_Estacionamientos">
+            <End Role="Estacionamientos" EntitySet="Estacionamientos" />
+            <End Role="Visitas" EntitySet="Visitas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="admedifModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Departamentos">
+          <Key>
+            <PropertyRef Name="DepartamentoId" />
+          </Key>
+          <Property Name="DepartamentoId" Type="Int32" Nullable="false" />
+          <Property Name="Piso" Type="Int32" Nullable="false" />
+          <Property Name="Orientacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cocina" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Metros" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Propietarios" Relationship="Self.FK_Propietarios_Departamentos" FromRole="Departamentos" ToRole="Propietarios" />
+          <NavigationProperty Name="Visitas" Relationship="Self.FK_Visitas_Departamentos" FromRole="Departamentos" ToRole="Visitas" />
+          <Property Name="Alicuota" Type="Decimal" Precision="2" Scale="2" />
+          <NavigationProperty Name="GastosPropiedades" Relationship="admedifModel.FK_GastosPropiedades_Departamentos" FromRole="Departamentos" ToRole="GastosPropiedades" />
+          <NavigationProperty Name="Reservas" Relationship="admedifModel.FK_Reservas_Departamentos" FromRole="Departamentos" ToRole="Reservas" />
+        </EntityType>
+        <EntityType Name="Estacionamientos">
+          <Key>
+            <PropertyRef Name="EstacionamientoId" />
+          </Key>
+          <Property Name="EstacionamientoId" Type="Int32" Nullable="false" />
+          <Property Name="Piso" Type="Int32" Nullable="false" />
+          <Property Name="Tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Propietarios" Relationship="Self.FK_Propietarios_Estacionamientos" FromRole="Estacionamientos" ToRole="Propietarios" />
+          <NavigationProperty Name="Visitas" Relationship="Self.FK_Visitas_Estacionamientos" FromRole="Estacionamientos" ToRole="Visitas" />
+        </EntityType>
+        <EntityType Name="Propietarios">
+          <Key>
+            <PropertyRef Name="PropietarioId" />
+          </Key>
+          <Property Name="PropietarioId" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoM" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Rut" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Depto" Type="Int32" />
+          <Property Name="Estacionamiento" Type="Int32" />
+          <Property Name="TelFijo" Type="Int32" />
+          <Property Name="TelTrabajo" Type="Int32" />
+          <Property Name="TelCelular" Type="Int32" />
+          <NavigationProperty Name="Departamentos" Relationship="Self.FK_Propietarios_Departamentos" FromRole="Propietarios" ToRole="Departamentos" />
+          <NavigationProperty Name="Estacionamientos" Relationship="Self.FK_Propietarios_Estacionamientos" FromRole="Propietarios" ToRole="Estacionamientos" />
+        </EntityType>
+        <EntityType Name="Visitas">
+          <Key>
+            <PropertyRef Name="VisitaId" />
+          </Key>
+          <Property Name="VisitaId" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoM" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Rut" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Depto" Type="Int32" Nullable="false" />
+          <Property Name="EstacionamientoV" Type="Int32" />
+          <Property Name="Fingreso" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Departamentos" Relationship="Self.FK_Visitas_Departamentos" FromRole="Visitas" ToRole="Departamentos" />
+          <NavigationProperty Name="Estacionamientos" Relationship="Self.FK_Visitas_Estacionamientos" FromRole="Visitas" ToRole="Estacionamientos" />
+        </EntityType>
+        <Association Name="FK_Propietarios_Departamentos">
+          <End Role="Departamentos" Type="Self.Departamentos" Multiplicity="0..1" />
+          <End Role="Propietarios" Type="Self.Propietarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departamentos">
+              <PropertyRef Name="DepartamentoId" />
+            </Principal>
+            <Dependent Role="Propietarios">
+              <PropertyRef Name="Depto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visitas_Departamentos">
+          <End Role="Departamentos" Type="Self.Departamentos" Multiplicity="1" />
+          <End Role="Visitas" Type="Self.Visitas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departamentos">
+              <PropertyRef Name="DepartamentoId" />
+            </Principal>
+            <Dependent Role="Visitas">
+              <PropertyRef Name="Depto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Propietarios_Estacionamientos">
+          <End Role="Estacionamientos" Type="Self.Estacionamientos" Multiplicity="0..1" />
+          <End Role="Propietarios" Type="Self.Propietarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estacionamientos">
+              <PropertyRef Name="EstacionamientoId" />
+            </Principal>
+            <Dependent Role="Propietarios">
+              <PropertyRef Name="Estacionamiento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visitas_Estacionamientos">
+          <End Role="Estacionamientos" Type="Self.Estacionamientos" Multiplicity="0..1" />
+          <End Role="Visitas" Type="Self.Visitas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estacionamientos">
+              <PropertyRef Name="EstacionamientoId" />
+            </Principal>
+            <Dependent Role="Visitas">
+              <PropertyRef Name="EstacionamientoV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="admedifEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Departamentos" EntityType="Self.Departamentos" />
+          <EntitySet Name="Estacionamientos" EntityType="Self.Estacionamientos" />
+          <EntitySet Name="Propietarios" EntityType="Self.Propietarios" />
+          <EntitySet Name="Visitas" EntityType="Self.Visitas" />
+          <AssociationSet Name="FK_Propietarios_Departamentos" Association="Self.FK_Propietarios_Departamentos">
+            <End Role="Departamentos" EntitySet="Departamentos" />
+            <End Role="Propietarios" EntitySet="Propietarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visitas_Departamentos" Association="Self.FK_Visitas_Departamentos">
+            <End Role="Departamentos" EntitySet="Departamentos" />
+            <End Role="Visitas" EntitySet="Visitas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Propietarios_Estacionamientos" Association="Self.FK_Propietarios_Estacionamientos">
+            <End Role="Estacionamientos" EntitySet="Estacionamientos" />
+            <End Role="Propietarios" EntitySet="Propietarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visitas_Estacionamientos" Association="Self.FK_Visitas_Estacionamientos">
+            <End Role="Estacionamientos" EntitySet="Estacionamientos" />
+            <End Role="Visitas" EntitySet="Visitas" />
+          </AssociationSet>
+          <EntitySet Name="GastosComunes" EntityType="admedifModel.GastosComunes" />
+          <EntitySet Name="GastosPropiedades" EntityType="admedifModel.GastosPropiedades" />
+          <EntitySet Name="Reservas" EntityType="admedifModel.Reservas" />
+          <AssociationSet Name="FK_GastosPropiedades_Departamentos" Association="admedifModel.FK_GastosPropiedades_Departamentos">
+            <End Role="Departamentos" EntitySet="Departamentos" />
+            <End Role="GastosPropiedades" EntitySet="GastosPropiedades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservas_Departamentos" Association="admedifModel.FK_Reservas_Departamentos">
+            <End Role="Departamentos" EntitySet="Departamentos" />
+            <End Role="Reservas" EntitySet="Reservas" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="GastosComunes">
+          <Key>
+            <PropertyRef Name="GastosComunesId" />
+          </Key>
+          <Property Name="GastosComunesId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Año" Type="Int32" Nullable="false" />
+          <Property Name="Mes" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="GastosServicios" Type="Int32" Nullable="false" />
+          <Property Name="ServiciosHonorarios" Type="Int32" />
+          <Property Name="MaterialesGenerales" Type="Int32" />
+          <Property Name="Sueldos" Type="Int32" Nullable="false" />
+          <Property Name="Extras" Type="Int32" />
+          <Property Name="Total" Type="Int32" />
+        </EntityType>
+        <EntityType Name="GastosPropiedades">
+          <Key>
+            <PropertyRef Name="GastoPropiedadId" />
+          </Key>
+          <Property Name="GastoPropiedadId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartamentoId" Type="Int32" Nullable="false" />
+          <Property Name="Año" Type="Int32" Nullable="false" />
+          <Property Name="Mes" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="GastoComunidad" Type="Int32" Nullable="false" />
+          <Property Name="Alicuota" Type="Decimal" Nullable="false" Precision="2" Scale="2" />
+          <Property Name="Extra" Type="Int32" />
+          <Property Name="Multa" Type="Int32" />
+          <Property Name="TotalGastoDepto" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Departamentos" Relationship="admedifModel.FK_GastosPropiedades_Departamentos" FromRole="GastosPropiedades" ToRole="Departamentos" />
+        </EntityType>
+        <EntityType Name="Reservas">
+          <Key>
+            <PropertyRef Name="ReservaId" />
+          </Key>
+          <Property Name="ReservaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartamentoId" Type="Int32" Nullable="false" />
+          <Property Name="EspacioComunId" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Horario" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Departamentos" Relationship="admedifModel.FK_Reservas_Departamentos" FromRole="Reservas" ToRole="Departamentos" />
+        </EntityType>
+        <Association Name="FK_GastosPropiedades_Departamentos">
+          <End Type="admedifModel.Departamentos" Role="Departamentos" Multiplicity="1" />
+          <End Type="admedifModel.GastosPropiedades" Role="GastosPropiedades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departamentos">
+              <PropertyRef Name="DepartamentoId" />
+            </Principal>
+            <Dependent Role="GastosPropiedades">
+              <PropertyRef Name="DepartamentoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservas_Departamentos">
+          <End Type="admedifModel.Departamentos" Role="Departamentos" Multiplicity="1" />
+          <End Type="admedifModel.Reservas" Role="Reservas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departamentos">
+              <PropertyRef Name="DepartamentoId" />
+            </Principal>
+            <Dependent Role="Reservas">
+              <PropertyRef Name="DepartamentoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="admedifModelStoreContainer" CdmEntityContainer="admedifEntities">
+          <EntitySetMapping Name="Departamentos">
+            <EntityTypeMapping TypeName="admedifModel.Departamentos">
+              <MappingFragment StoreEntitySet="Departamentos">
+                <ScalarProperty Name="Alicuota" ColumnName="Alicuota" />
+                <ScalarProperty Name="DepartamentoId" ColumnName="DepartamentoId" />
+                <ScalarProperty Name="Piso" ColumnName="Piso" />
+                <ScalarProperty Name="Orientacion" ColumnName="Orientacion" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Cocina" ColumnName="Cocina" />
+                <ScalarProperty Name="Metros" ColumnName="Metros" />
+                </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estacionamientos">
+            <EntityTypeMapping TypeName="admedifModel.Estacionamientos">
+              <MappingFragment StoreEntitySet="Estacionamientos">
+                <ScalarProperty Name="EstacionamientoId" ColumnName="EstacionamientoId" />
+                <ScalarProperty Name="Piso" ColumnName="Piso" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Propietarios">
+            <EntityTypeMapping TypeName="admedifModel.Propietarios">
+              <MappingFragment StoreEntitySet="Propietarios">
+                <ScalarProperty Name="PropietarioId" ColumnName="PropietarioId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ApellidoP" ColumnName="ApellidoP" />
+                <ScalarProperty Name="ApellidoM" ColumnName="ApellidoM" />
+                <ScalarProperty Name="Rut" ColumnName="Rut" />
+                <ScalarProperty Name="Depto" ColumnName="Depto" />
+                <ScalarProperty Name="Estacionamiento" ColumnName="Estacionamiento" />
+                <ScalarProperty Name="TelFijo" ColumnName="TelFijo" />
+                <ScalarProperty Name="TelTrabajo" ColumnName="TelTrabajo" />
+                <ScalarProperty Name="TelCelular" ColumnName="TelCelular" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Visitas">
+            <EntityTypeMapping TypeName="admedifModel.Visitas">
+              <MappingFragment StoreEntitySet="Visitas">
+                <ScalarProperty Name="VisitaId" ColumnName="VisitaId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ApellidoP" ColumnName="ApellidoP" />
+                <ScalarProperty Name="ApellidoM" ColumnName="ApellidoM" />
+                <ScalarProperty Name="Rut" ColumnName="Rut" />
+                <ScalarProperty Name="Depto" ColumnName="Depto" />
+                <ScalarProperty Name="EstacionamientoV" ColumnName="EstacionamientoV" />
+                <ScalarProperty Name="Fingreso" ColumnName="Fingreso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GastosComunes">
+            <EntityTypeMapping TypeName="admedifModel.GastosComunes">
+              <MappingFragment StoreEntitySet="GastosComunes">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Extras" ColumnName="Extras" />
+                <ScalarProperty Name="Sueldos" ColumnName="Sueldos" />
+                <ScalarProperty Name="MaterialesGenerales" ColumnName="MaterialesGenerales" />
+                <ScalarProperty Name="ServiciosHonorarios" ColumnName="ServiciosHonorarios" />
+                <ScalarProperty Name="GastosServicios" ColumnName="GastosServicios" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="Año" ColumnName="Año" />
+                <ScalarProperty Name="GastosComunesId" ColumnName="GastosComunesId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GastosPropiedades">
+            <EntityTypeMapping TypeName="admedifModel.GastosPropiedades">
+              <MappingFragment StoreEntitySet="GastosPropiedades">
+                <ScalarProperty Name="TotalGastoDepto" ColumnName="TotalGastoDepto" />
+                <ScalarProperty Name="Multa" ColumnName="Multa" />
+                <ScalarProperty Name="Extra" ColumnName="Extra" />
+                <ScalarProperty Name="Alicuota" ColumnName="Alicuota" />
+                <ScalarProperty Name="GastoComunidad" ColumnName="GastoComunidad" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="Año" ColumnName="Año" />
+                <ScalarProperty Name="DepartamentoId" ColumnName="DepartamentoId" />
+                <ScalarProperty Name="GastoPropiedadId" ColumnName="GastoPropiedadId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reservas">
+            <EntityTypeMapping TypeName="admedifModel.Reservas">
+              <MappingFragment StoreEntitySet="Reservas">
+                <ScalarProperty Name="Horario" ColumnName="Horario" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="EspacioComunId" ColumnName="EspacioComunId" />
+                <ScalarProperty Name="DepartamentoId" ColumnName="DepartamentoId" />
+                <ScalarProperty Name="ReservaId" ColumnName="ReservaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

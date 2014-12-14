@@ -1,0 +1,86 @@
+﻿@model IEnumerable<AdminEdificios.GastosComunes>
+
+@{
+    ViewBag.Title = "GastosComunes";
+}
+
+<h2>GastosComunes</h2>
+
+<p>
+    @Html.ActionLink("Ingresar Gasto Mes", "CreateGC")
+</p>
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Año)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Mes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GastosServicios)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ServiciosHonorarios)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaterialesGenerales)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sueldos)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Extras)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Año)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Mes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GastosServicios)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiciosHonorarios)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaterialesGenerales)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sueldos)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Extras)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Total)
+        </td>
+        @*<td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.GastosComunesId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.GastosComunesId })
+        </td>*@
+    </tr>
+}
+
+</table>
+
+<a></a>
+<a></a>
+<a></a>
+@using (Html.BeginForm("GenerateReport", "Home", FormMethod.Get))
+{
+    <input type="submit" value="Generar" />    <b> Crear Reporte historico Gastos </b>
+}
+
